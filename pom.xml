@@ -11,7 +11,7 @@
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <maven.compiler.source>1.8</maven.compiler.source>
     <maven.compiler.target>1.8</maven.compiler.target>
-    <mysql.version>5.1.37</mysql.version>
+    <mysql.version>8.0.12</mysql.version>
     <spring.version>4.1.7.RELEASE</spring.version>
 
   </properties>
@@ -49,7 +49,7 @@
     <dependency>
       <groupId>com.alibaba</groupId>
       <artifactId>druid</artifactId>
-      <version>1.0.0</version>
+      <version>1.1.10</version>
     </dependency>
 
     <!-- DAO: MyBatis -->
@@ -227,10 +227,16 @@
       <version>4.4.0</version>
     </dependency>
     <!-- IKAnalyzer -->
+    <dependency>
+      <groupId>com.janeluo</groupId>
+      <artifactId>ikanalyzer</artifactId>
+      <version>2012_u6</version>
+    </dependency>
+
     <!--<dependency>-->
-      <!--<groupId>com.janeluo</groupId>-->
-      <!--<artifactId>ikanalyzer</artifactId>-->
-      <!--<version>2012_u6</version>-->
+      <!--<groupId>org.wltea.ik-analyzer</groupId>-->
+      <!--<artifactId>ik-analyzer</artifactId>-->
+      <!--<version>3.2.8</version>-->
     <!--</dependency>-->
 
     <!-- poi -->
@@ -260,6 +266,21 @@
       <version>2.6.12</version>
     </dependency>
 
+
+
+    <!-- mybatis-generator-core 反向生成java代码-->
+
+    <dependency>
+
+      <groupId>org.mybatis.generator</groupId>
+
+      <artifactId>mybatis-generator-core</artifactId>
+
+      <version>1.3.5</version>
+
+    </dependency>
+
+
   </dependencies>
   <build>
     <finalName>SSM</finalName>
@@ -271,6 +292,49 @@
           <include>**/*.xml</include>
         </includes>
       </resource>
+      <resource>
+        <directory>src/main/resources</directory>
+        <includes>
+          <include>**/*.properties</include>
+          <include>**/*.xml</include>
+        </includes>
+        <filtering>false</filtering>
+      </resource>
     </resources>
+
+
+
+    <plugins>
+      <plugin>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-maven-plugin</artifactId>
+        <configuration>
+          <!--<configurationFile>src/main/resources/mybatis-generator.xml</configurationFile>-->
+          <!--<overwrite>true</overwrite>-->
+        </configuration>
+      </plugin>
+      <!-- 自动生成代码插件 -->
+      <plugin>
+        <groupId>org.mybatis.generator</groupId>
+        <artifactId>mybatis-generator-maven-plugin</artifactId>
+        <version>1.3.0</version>
+        <configuration>
+          <verbose>true</verbose>
+          <overwrite>true</overwrite>
+        </configuration>
+        <dependencies>
+          <dependency>
+            <groupId>org.mybatis.generator</groupId>
+            <artifactId>mybatis-generator-core</artifactId>
+            <version>1.3.1</version>
+          </dependency>
+          <dependency>
+            <groupId>log4j</groupId>
+            <artifactId>log4j</artifactId>
+            <version>1.2.17</version>
+          </dependency>
+        </dependencies>
+      </plugin>
+    </plugins>
   </build>
 </project>
